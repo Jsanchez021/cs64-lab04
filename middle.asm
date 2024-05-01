@@ -44,11 +44,11 @@ main:
     bge $s0, $s1, bigger_1
 
 smaller_1:
-    bge $s0, $s2, median
+    bge $s0, $s2, reg_0
     ble $s0, $s2, minimum
 
 bigger_1:
-    ble $s0, $s2, median
+    ble $s0, $s2, reg_0
     bge $s0, $s2, maximum
 
 minimum:
@@ -58,6 +58,10 @@ minimum:
 maximum:
     ble $s1, $s2, reg_2
     ble $s2, $s1, reg_1
+
+reg_0:
+    move $t0, $s0
+    j median
 
 reg_2:
     move $t0, $s2
