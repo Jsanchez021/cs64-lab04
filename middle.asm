@@ -10,76 +10,74 @@
     new_line: .asciiz "\n"
 
 .text
+
 main:
-    # Asking user for the first number
-    li $v0, 4
+
+    li $v0, 4         #asking user for first number
     la $a0, prompt_1
     syscall
 
-    # Reading the first number
-    li $v0, 5
+    li $v0, 5         #reading first number
     syscall
     move $s0, $v0
 
-    # Asking user for the second number
-    li $v0, 4
+    li $v0, 4         #asking user for second number
     la $a0, prompt_2
     syscall
 
-    # Reading the second number
-    li $v0, 5
+    li $v0, 5         #reading second number
     syscall
     move $s1, $v0
 
-    # Asking user for the third number
-    li $v0, 4
+    li $v0, 4         #asking user for third number
     la $a0, prompt_3
     syscall
 
-    # Reading the third number
-    li $v0, 5
+    li $v0, 5         #reading third number
     syscall
     move $s2, $v0
 
-    # Finding the median
-    blt $s0, $s1, smaller_1
-    bgt $s0, $s1, bigger_1
+    
+#finding the median
 
-    smaller_1:
-        blt $s0, $s2, median
-        bge $s0, $s2, minimum
+    ble $s0, $s1, smaller_1
+    bge $s0, $s1, bigger_1
 
-    bigger_1:
-        bge $s0, $s2, median
-        blt $s0, $s2, maximum
+smaller_1:
+    bge $s0, $s2, median
+    ble $s0, $s2, minimum
 
-    minimum:
-        blt $s1, $s2, reg_2
-        bge $s2, $s1, reg_1
+bigger_1:
+    ble $s0, $s2, median
+    bge $s0, $s2, maximum
 
-    maximum:
-        bge $s1, $s2, reg_2
-        blt $s2, $s1, reg_1
+minimum:
+    bge $s1, $s2, reg_2
+    bge $s2, $s1, reg_1
 
-    reg_2:
-        move $t0, $s2
-        j median
+maximum:
+    ble $s1, $s2, reg_2
+    ble $s2, $s1, reg_1
 
-    reg_1:
-        move $t0, $s1
-        j median
+reg_2:
+    move $t0, $s2
+    j median
 
-    median:
-        li $v0, 4
-        la $a0, middle
-        syscall
-        li $v0, 1
-        move $a0, $t0
-        syscall
-        li $v0, 4
-        la $a0, new_line
-        syscall
+reg_1:
+    move $t0, $s1
+    j median
 
-    exit:
-        li $v0, 10
-        syscall
+median:
+    li $v0, 4          #outputing the result
+    la $a0, middle
+    syscall
+    li $v0, 1
+    move $a0, $t0
+    syscall
+    li $v0, 4
+    la $a0, new_line
+    syscall
+
+exit:
+    li $v0, 10
+    syscall
