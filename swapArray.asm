@@ -236,7 +236,7 @@ doSwap:
 
 doSwap_loop:
         # Check if x < 15
-        slt $t1, $t0, 15
+        slti $t1, $t0, 15
         beq $t1, $zero, doSwap_exit 
     
         # Load myArray[x] into $t2
@@ -246,20 +246,27 @@ doSwap_loop:
         lw $t4, 0($t2)          # Load myArray[x] into $t2
     
         # Check if myArray[x] is divisible by 2 or 3
-        andi $t5, $t4, 3        
-        bne $t5, $zero, not_divisible_by_3
-        andi $t5, $t4, 1        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
-        bne $t5, $zero, increment_x
+        andi $t5, $t4, 1        
+        bne $t5, $zero, not_divisible_by_2
 
-        sw $zero, 0($t2)
+        andi $t5, $t4, 3        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
+        bne $t5, $zero, divisible_by_3
+
+        j increment_x
     
+not_divisible_by_2:
+        # If myArray[x] is divisible by 2, set it to 0
+        sw $zero, 0($t2)
+        j increment_x
+
 divisible_by_3:
+        # If myArray[x] is divisible by 3, set it to 0
         sw $zero, 0($t2)
 
 increment_x:
+        # Increment x
         addi $t0, $t0, 1
         j doSwap_loop
 
 doSwap_exit:
-        # DO NOT REMOVE THIS LAST LINE
         jr $ra
