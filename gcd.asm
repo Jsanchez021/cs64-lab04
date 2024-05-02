@@ -90,7 +90,7 @@ check_b:
     move $t6, $t0   # gcd = i
 
 increment_i:
-    addi $t4, $t4, 1   # i++
+    addi $t0, $t0, 1   # i++
     j for_loop  # Repeat the loop
     
 loop_exit:
