@@ -236,33 +236,28 @@ doSwap:
 
 doSwap_loop:
         # Check if x < 15
-        slti $t1, $t0, 15
+        slt $t1, $t0, 15
         beq $t1, $zero, doSwap_exit 
     
         # Load myArray[x] into $t2
-        la $t3, myArray
-        sll $t4, $t0, 2         # Calculate offset (x * 4 bytes)
-        add $t3, $t3, $t4       # Calculate address of myArray[x]
-        lw $t2, 0($t3)          # Load myArray[x] into $t2
+        la $t2, myArray
+        sll $t3, $t0, 2         # Calculate offset (x * 4 bytes)
+        add $t2, $t2, $t3       # Calculate address of myArray[x]
+        lw $t4, 0($t2)          # Load myArray[x] into $t2
     
         # Check if myArray[x] is divisible by 2 or 3
-        andi $t5, $t2, 1        # Check if myArray[x] is odd (remainder of division by 2)
+        andi $t5, $t4, 1        # Check if myArray[x] is odd (remainder of division by 2)
         bne $t5, $zero, not_divisible_by_2
-        andi $t5, $t2, 3        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
+        andi $t5, $t4, 3        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
         bne $t5, $zero, divisible_by_3
     
 not_divisible_by_2:
-        # Set myArray[x] to 0
-        sw $zero, 0($t3)
-        j increment_x
+        addi $t0, $t0, 1
+        j doSwap_loop
 
 divisible_by_3:
         # Set myArray[x] to 0
-        sw $zero, 0($t3)
-        j increment_x
-
-increment_x:
-        # Increment x
+        sw $zero, 0($t2)
         addi $t0, $t0, 1
         j doSwap_loop
 
