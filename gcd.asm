@@ -91,7 +91,7 @@ check_b:
 
 increment_i:
     addi $t0, $t0, 1   # i++
-    j for_loop  # Repeat the loop
+    j GCD  # Repeat the loop
     
 loop_exit:
     move $t0, $t6
