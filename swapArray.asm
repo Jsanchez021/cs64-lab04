@@ -246,18 +246,17 @@ doSwap_loop:
         lw $t4, 0($t2)          # Load myArray[x] into $t2
     
         # Check if myArray[x] is divisible by 2 or 3
-        andi $t5, $t4, 1        # Check if myArray[x] is odd (remainder of division by 2)
-        bne $t5, $zero, not_divisible_by_2
-        andi $t5, $t4, 3        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
-        bne $t5, $zero, divisible_by_3
-    
-not_divisible_by_2:
-        addi $t0, $t0, 1
-        j doSwap_loop
+        andi $t5, $t4, 3        
+        bne $t5, $zero, not_divisible_by_3
+        andi $t5, $t4, 1        # Check if myArray[x] is divisible by 3 (remainder of division by 3)
+        bne $t5, $zero, increment_x
 
-divisible_by_3:
-        # Set myArray[x] to 0
         sw $zero, 0($t2)
+    
+divisible_by_3:
+        sw $zero, 0($t2)
+
+increment_x:
         addi $t0, $t0, 1
         j doSwap_loop
 
