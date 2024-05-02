@@ -35,15 +35,34 @@
 .data
 
 	# TODO: Complete these declarations/initializations
-    .asciiz "Enter the first number:\n"
-    .asciiz "Enter the second number:\n"
-    .asciiz "GCD:\n"
-    .asciiz "\n"
+    prompt_1: .asciiz "Enter the first number:\n"
+    prompt_2: .asciiz "Enter the second number:\n"
+    gcd: .asciiz "GCD:\n"
+    new_line: .asciiz "\n"
 
 .text
 main:
-	
-	# TODO: Write your code here
+	li $v0, 4         #ask for first number
+    la $a0, prompt_1
+    syscall
+
+    li $v0, 4         #ask for second number
+    la $a0, prompt_2
+    syscall
+
+    #find the gcd
+    
+
+
+    li $v0, 4         #printing the gcd
+    la $a0, gcd
+    syscall
+    li $v0, 1
+    move $a0, $t0
+    syscall
+    li $v0, 4
+    la $a0, new_line
 
 exit:
-	# TODO: Write code to properly exit a SPIM simulation
+	li $v0, 10
+    syscall
