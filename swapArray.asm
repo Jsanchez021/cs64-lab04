@@ -266,7 +266,7 @@ divisible_2:
 
 divisible_3:
         # If myArray[x] is divisible by 3, set it to 0
-        sw $zero, 0($t1)
+        sw $zero, 0($t2)
         addi $t0, $t0, 1
         j doSwap_loop
 
