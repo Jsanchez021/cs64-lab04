@@ -259,7 +259,8 @@ doSwap_loop:
 divisible:
         # If myArray[x] is divisible by 2, set it to 0
         sw $zero, 0($a2)
+        addi $t0, $t0, 1
         j doSwap_loop
-        
+
 doSwap_exit:
         jr $ra
