@@ -249,17 +249,18 @@ doSwap_loop:
         div $a0, $t3
         mfhi $t4
         beq $t4, $zero, divisible_2
-        
+
         li $t3, 3
         div $a0, $t3
         mfhi $t4
         beq $t4, $zero, divisible_3
+
         addi $t0, $t0, 1
         j doSwap_loop
     
 divisible_2:
         # If myArray[x] is divisible by 2, set it to 0
-        sw $zero, 0($t1)
+        sw $zero, 0($t2)
         addi $t0, $t0, 1
         j doSwap_loop
 
